@@ -1,0 +1,25 @@
+mapping_id	species	gene_or_isoform	mutation	literature_position	literature_wildtype_residue	literature_mutant_residue	reference_accession	reference_sequence_length	reference_residue_at_literature_position	position_match_status	alternative_position_checked	alternative_reference_residue	final_reference_position	mapping_status	notes
+MUT_MAP_001	Amaranthus palmeri	PPX2L/PPO2	V361A	361	V	A	ATE88443.1	535	V	matches_reference			361	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_002	Amaranthus palmeri	PPX2L/PPO2	Delta G210	210	G		ATE88443.1	535	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_003	Amaranthus palmeri	PPX2L/PPO2	R128G	128	R	G	ATE88443.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_004	Amaranthus palmeri	PPX2L/PPO2	R128M	128	R	M	ATE88443.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_005	Amaranthus palmeri	PPX2L/PPO2	Delta G210	210	G		ATE88443.1	535	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_006	Amaranthus palmeri	PPX2L/PPO2	R128G	128	R	G	ATE88443.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_007	Amaranthus palmeri	PPX2L/PPO2	R128M	128	R	M	ATE88443.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_008	Amaranthus tuberculatus	PPX2L/PPO2	Delta G210	210	G		ABD52326.1	534	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_009	Amaranthus tuberculatus	PPX2L/PPO2	R128G	128	R	G	ABD52326.1	534	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_010	Amaranthus palmeri	PPX2L/PPO2	Delta G210	210	G		ATE88443.1	535	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_011	Amaranthus palmeri	PPX2L/PPO2	V361A	361	V	A	ATE88443.1	535	V	matches_reference			361	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_012	Amaranthus palmeri	PPX2L/PPO2	Delta G210	210	G		ATE88443.1	535	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_013	Amaranthus tuberculatus	PPX2L/PPO2	Delta G210	210	G		ABD52326.1	534	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_014	Amaranthus palmeri	PPX2L/PPO2	R128G	128	R	G	ATE88443.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_015	Amaranthus tuberculatus	PPX2L/PPO2	R128G	128	R	G	ABD52326.1	534	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_016	Amaranthus palmeri	PPX2L/PPO2	V361A	361	V	A	ATE88443.1	535	V	matches_reference			361	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_017	Amaranthus palmeri	PPX2L/PPO2	G399A	399	G	A	ATE88443.1	535	G	matches_reference			399	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_018	Amaranthus tuberculatus	PPX2L/PPO2	R128G	128	R	G	ABD52326.1	534	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_019	Amaranthus tuberculatus	PPX2L/PPO2	R128I	128	R	I	ABD52326.1	534	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_020	Amaranthus palmeri	PPX2L/PPO2	Delta G210	210	G		ATE88443.1	535	G	matches_reference			210	confirmed	Reference has glycine at literature Delta G210 position.
+MUT_MAP_021	Amaranthus palmeri	PPX2L/PPO2	G399A	399	G	A	ATE88443.1	535	G	matches_reference			399	confirmed	Reference residue matches literature wildtype residue at reported position.
+MUT_MAP_022	Amaranthus palmeri	PPX2L/PPO2	R98G	98	R	G	ATE88443.1	535	T	needs_manual_check	128	R	128	needs_manual_check	Literature R98 does not match full-length reference position 98, but position 128 is R; likely signal-peptide numbering offset, requires manual confirmation.
+MUT_MAP_023	Amaranthus palmeri	PPX2L/PPO2	R98M	98	R	M	ATE88443.1	535	T	needs_manual_check	128	R	128	needs_manual_check	Literature R98 does not match full-length reference position 98, but position 128 is R; likely signal-peptide numbering offset, requires manual confirmation.
+MUT_MAP_024	Amaranthus retroflexus	PPX2L/PPO2	R128G	128	R	G	QDQ68833.1	535	R	matches_reference			128	confirmed	Reference residue matches literature wildtype residue at reported position.

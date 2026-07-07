@@ -1,0 +1,4 @@
+species	gene_or_isoform	reference_accession	linked_nucleotide_accession	sequence_length_aa	recommended_use	verification_status	notes
+Amaranthus palmeri	PPX2L/PPO2	ATE88443.1	MF583744.1	535	wildtype_model_candidate	verified	Verified as current working PPO2/PPX2 reference candidate based on residue-state check; still cite accession source in manuscript.
+Amaranthus retroflexus	PPX2L/PPO2	QDQ68833.1	MK798105.1	535	wildtype_model_candidate	verified	Verified as current working PPO2/PPX2 reference candidate based on residue-state check; still cite accession source in manuscript.
+Amaranthus tuberculatus	PPX2L/PPO2	ABD52326.1	DQ386114.1	534	wildtype_model_candidate	verified	Verified as current working PPO2/PPX2 reference candidate based on residue-state check; still cite accession source in manuscript.

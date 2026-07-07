@@ -1,0 +1,10 @@
+species	accession_id	sequence_length_aa	residue_98	residue_128	residue_210_window	has_glycine_210	residue_361	residue_399	apparent_mutation_state	recommended_role	notes
+Amaranthus palmeri	ATE88443.1	535	T	R	205-215:VAGTCGGDPQS	yes	V	G	no requested-site mutation detected by direct numbering	wildtype_model_candidate	
+Amaranthus palmeri	QIA20308.1	535	T	R	205-215:VAGTCGGDPQS	yes	V	A	possible G399A allele by direct numbering	needs_manual_check	Full-length A. palmeri PPX2L; compare publication allele context before modeling.
+Amaranthus palmeri	QIA20315.1	535	T	R	205-215:VAGTCGGDPQS	yes	V	G	no requested-site mutation detected by direct numbering	needs_manual_check	Full-length A. palmeri PPX2L; compare publication allele context before modeling.
+Amaranthus retroflexus	QDQ68833.1	535	T	R	205-215:VAGTCGGDPQS	yes	V	G	no requested-site mutation detected by direct numbering	wildtype_model_candidate	
+Amaranthus retroflexus	QDQ68834.1	535	T	G	205-215:VAGTCGGDPQS	yes	V	G	no requested-site mutation detected by direct numbering	residue_mapping_reference	
+Amaranthus retroflexus	QXF78614.1	535	T	G	205-215:VAGTCGGDPQS	yes	V	G	no requested-site mutation detected by direct numbering	residue_mapping_reference	
+Amaranthus tuberculatus	ABD52326.1	534	T	R	205-215:VAGTCGGDPQS	yes	P	T	no requested-site mutation detected by direct numbering	wildtype_model_candidate	
+Amaranthus tuberculatus	ABD52328.1	533	T	R	205-215:VAGTCGDPQSL	no	L	L	possible DeltaG210-related allele by 210-region motif comparison	mutant_allele_reference	A. tuberculatus candidate lacks the expected glycine in the 210-region motif; inspect alignment for DeltaG210 context.
+Amaranthus tuberculatus	ABD52329.1	534	T	R	205-215:VAGTCGGDPQS	yes	P	T	no requested-site mutation detected by direct numbering	residue_mapping_reference	

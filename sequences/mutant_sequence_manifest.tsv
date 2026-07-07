@@ -1,0 +1,23 @@
+mutant_sequence_id	species	reference_accession	mutation	reference_position	wildtype_residue	mutant_residue	sequence_length_aa	source_paper_ids	mapping_status	fasta_file	notes
+MUTSEQ_001	Amaranthus palmeri	ATE88443.1	V361A	361	V	A	535	PAPER_003	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_001 confirmed substitution mapping.
+MUTSEQ_002	Amaranthus palmeri	ATE88443.1	Delta G210	210	G		534	PAPER_006	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_002 confirmed deletion mapping.
+MUTSEQ_003	Amaranthus palmeri	ATE88443.1	R128G	128	R	G	535	PAPER_006	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_003 confirmed substitution mapping.
+MUTSEQ_004	Amaranthus palmeri	ATE88443.1	R128M	128	R	M	535	PAPER_006	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_004 confirmed substitution mapping.
+MUTSEQ_005	Amaranthus palmeri	ATE88443.1	Delta G210	210	G		534	PAPER_016	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_005 confirmed deletion mapping.
+MUTSEQ_006	Amaranthus palmeri	ATE88443.1	R128G	128	R	G	535	PAPER_016	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_006 confirmed substitution mapping.
+MUTSEQ_007	Amaranthus palmeri	ATE88443.1	R128M	128	R	M	535	PAPER_016	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_007 confirmed substitution mapping.
+MUTSEQ_008	Amaranthus tuberculatus	ABD52326.1	Delta G210	210	G		533	PAPER_008	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_008 confirmed deletion mapping.
+MUTSEQ_009	Amaranthus tuberculatus	ABD52326.1	R128G	128	R	G	534	PAPER_008	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_009 confirmed substitution mapping.
+MUTSEQ_010	Amaranthus palmeri	ATE88443.1	Delta G210	210	G		534	PAPER_008	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_010 confirmed deletion mapping.
+MUTSEQ_011	Amaranthus palmeri	ATE88443.1	V361A	361	V	A	535	PAPER_008	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_011 confirmed substitution mapping.
+MUTSEQ_012	Amaranthus palmeri	ATE88443.1	Delta G210	210	G		534	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_012 confirmed deletion mapping.
+MUTSEQ_013	Amaranthus tuberculatus	ABD52326.1	Delta G210	210	G		533	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_013 confirmed deletion mapping.
+MUTSEQ_014	Amaranthus palmeri	ATE88443.1	R128G	128	R	G	535	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_014 confirmed substitution mapping.
+MUTSEQ_015	Amaranthus tuberculatus	ABD52326.1	R128G	128	R	G	534	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_015 confirmed substitution mapping.
+MUTSEQ_016	Amaranthus palmeri	ATE88443.1	V361A	361	V	A	535	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_016 confirmed substitution mapping.
+MUTSEQ_017	Amaranthus palmeri	ATE88443.1	G399A	399	G	A	535	PAPER_017	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_017 confirmed substitution mapping.
+MUTSEQ_018	Amaranthus tuberculatus	ABD52326.1	R128G	128	R	G	534	PAPER_020	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_018 confirmed substitution mapping.
+MUTSEQ_019	Amaranthus tuberculatus	ABD52326.1	R128I	128	R	I	534	PAPER_020	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_019 confirmed substitution mapping.
+MUTSEQ_020	Amaranthus palmeri	ATE88443.1	Delta G210	210	G		534	PAPER_024	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_020 confirmed deletion mapping.
+MUTSEQ_021	Amaranthus palmeri	ATE88443.1	G399A	399	G	A	535	PAPER_024	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_021 confirmed substitution mapping.
+MUTSEQ_022	Amaranthus retroflexus	QDQ68833.1	R128G	128	R	G	535	PAPER_030	confirmed	sequences\fasta\confirmed_mutant_ppo2_sequences.fasta	Created from MUT_MAP_024 confirmed substitution mapping.
