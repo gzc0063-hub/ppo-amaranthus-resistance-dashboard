@@ -1,0 +1,4 @@
+raw_gene_or_isoform	standard_gene_or_isoform	gene_symbol	protein_name	target_organelle	normalization_status	notes
+PPX2	PPX2/PPO2	needs_manual_check	needs_manual_check	needs_manual_check	needs_manual_check	Standard label for accession searching only; wording must be checked against each source paper before final use.
+PPO2/PPX2	PPX2/PPO2	needs_manual_check	needs_manual_check	needs_manual_check	needs_manual_check	Standard label for accession searching only; wording must be checked against each source paper before final use.
+PPX2/PPO2	PPX2/PPO2	needs_manual_check	needs_manual_check	needs_manual_check	needs_manual_check	Standard label for accession searching only; wording must be checked against each source paper before final use.

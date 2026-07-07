@@ -1,0 +1,7 @@
+target_id	species	gene_or_isoform	mutations_needed	herbicides_linked	priority	sequence_needed	notes
+SEQ_TARGET_001	Amaranthus palmeri	PPO2/PPX2	Delta G210; G399A; V361A	carfentrazone; flumioxazin; fomesafen; saflufenacil; trifludimoxazin	high	yes	Sequence accession and residue numbering require manual curation before modeling.
+SEQ_TARGET_002	Amaranthus palmeri	PPX2	Delta G210; G399A; R128G; R128M; V361A	epyrifenacil; fomesafen; lactofen; saflufenacil; saflufenacil + trifludimoxazin	high	yes	Sequence accession and residue numbering require manual curation before modeling.
+SEQ_TARGET_003	Amaranthus palmeri	PPX2/PPO2	R98G; R98M	fomesafen	high	yes	Sequence accession and residue numbering require manual curation before modeling.
+SEQ_TARGET_004	Amaranthus retroflexus	PPX2	R128G	fomesafen	medium	yes	Sequence accession and residue numbering require manual curation before modeling.
+SEQ_TARGET_005	Amaranthus tuberculatus	PPO2/PPX2	Delta G210; R128G	field assays also included lactofen; fomesafen; saflufenacil; trifludimoxazin	high	yes	Sequence accession and residue numbering require manual curation before modeling.
+SEQ_TARGET_006	Amaranthus tuberculatus	PPX2	Delta G210; R128G; R128I	epyrifenacil; fomesafen; saflufenacil; saflufenacil + trifludimoxazin	high	yes	Sequence accession and residue numbering require manual curation before modeling.

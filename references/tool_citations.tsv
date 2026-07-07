@@ -1,0 +1,10 @@
+tool	purpose	citation	doi_or_url	notes
+Python	General scripting and reproducible data processing			needs_manual_check
+R	Statistical analysis and visualization			needs_manual_check
+UCSF ChimeraX	Structure visualization and analysis			needs_manual_check
+AlphaFold/ColabFold	Protein structure prediction workflow			needs_manual_check
+AutoDock Vina	Molecular docking workflow			needs_manual_check
+RDKit	Cheminformatics data handling			needs_manual_check
+Open Babel	Chemical file conversion			needs_manual_check
+GitHub	Version control and repository hosting			needs_manual_check
+VS Code	Code editing environment			needs_manual_check

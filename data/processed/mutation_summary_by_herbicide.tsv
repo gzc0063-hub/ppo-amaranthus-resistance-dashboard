@@ -1,0 +1,10 @@
+herbicide	verified_evidence_rows	unique_mutations	mutations	species	paper_ids
+carfentrazone	2	2	Delta G210; G399A	Amaranthus palmeri	PAPER_024
+epyrifenacil	6	4	Delta G210; G399A; R128G; V361A	Amaranthus palmeri; Amaranthus tuberculatus	PAPER_017
+field assays also included lactofen	1	1	Delta G210	Amaranthus tuberculatus	PAPER_008
+flumioxazin	2	2	Delta G210; G399A	Amaranthus palmeri	PAPER_024
+fomesafen	18	8	Delta G210; G399A; R128G; R128I; R128M; R98G; R98M; V361A	Amaranthus palmeri; Amaranthus retroflexus; Amaranthus tuberculatus	PAPER_003; PAPER_006; PAPER_008; PAPER_016; PAPER_020; PAPER_024; PAPER_030; PAPER_035
+lactofen	1	1	V361A	Amaranthus palmeri	PAPER_003
+saflufenacil	8	4	Delta G210; G399A; R128G; V361A	Amaranthus palmeri; Amaranthus tuberculatus	PAPER_008; PAPER_017; PAPER_024
+saflufenacil + trifludimoxazin	2	1	Delta G210	Amaranthus palmeri; Amaranthus tuberculatus	PAPER_017
+trifludimoxazin	6	4	Delta G210; G399A; R128G; V361A	Amaranthus palmeri; Amaranthus tuberculatus	PAPER_008; PAPER_024

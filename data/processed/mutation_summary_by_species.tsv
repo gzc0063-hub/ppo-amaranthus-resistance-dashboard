@@ -1,0 +1,4 @@
+species	verified_evidence_rows	unique_mutations	mutations	paper_ids
+Amaranthus palmeri	17	7	Delta G210; G399A; R128G; R128M; R98G; R98M; V361A	PAPER_003; PAPER_006; PAPER_008; PAPER_016; PAPER_017; PAPER_024; PAPER_035
+Amaranthus retroflexus	1	1	R128G	PAPER_030
+Amaranthus tuberculatus	6	3	Delta G210; R128G; R128I	PAPER_008; PAPER_017; PAPER_020
