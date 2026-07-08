@@ -11,6 +11,21 @@ SCRIPTS = ROOT / "scripts"
 PROCESSED = ROOT / "data" / "processed"
 SEQUENCES = ROOT / "sequences"
 
+
+UNIQUE_MODELING_QUEUE_COLUMNS = [
+    "queue_id",
+    "species",
+    "reference_accession",
+    "mutation",
+    "sequence_type",
+    "representative_input_fasta",
+    "source_mutant_sequence_ids",
+    "source_paper_ids",
+    "already_modeled",
+    "modeling_priority",
+    "modeling_status",
+    "notes",
+]
 MODEL_REGISTRY_COLUMNS = [
     "model_id",
     "species",
@@ -485,6 +500,17 @@ class ReferenceTableTests(unittest.TestCase):
         ]:
             path = SCRIPTS / script_name
             self.assertTrue(path.exists(), f"Missing ColabFold registry script: {path}")
+
+    def test_unique_modeling_queue_has_required_columns(self):
+        path = ROOT / "modeling_inputs" / "colabfold" / "unique_modeling_queue.tsv"
+        self.assertTrue(path.exists(), f"Missing unique modeling queue table: {path}")
+        with path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle, delimiter="\t")
+            self.assertEqual(reader.fieldnames, UNIQUE_MODELING_QUEUE_COLUMNS)
+
+    def test_validate_unique_modeling_queue_script_exists(self):
+        path = SCRIPTS / "validate_unique_modeling_queue.py"
+        self.assertTrue(path.exists(), f"Missing validation script: {path}")
 
 if __name__ == "__main__":
     unittest.main()
