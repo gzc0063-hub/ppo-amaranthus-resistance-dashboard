@@ -11,6 +11,22 @@ SCRIPTS = ROOT / "scripts"
 PROCESSED = ROOT / "data" / "processed"
 SEQUENCES = ROOT / "sequences"
 
+MODEL_REGISTRY_COLUMNS = [
+    "model_id",
+    "species",
+    "reference_accession",
+    "mutation",
+    "sequence_type",
+    "modeling_tool",
+    "modeling_mode",
+    "input_fasta",
+    "external_output_zip_path",
+    "best_model_file_name",
+    "mean_plddt",
+    "pae_file_present",
+    "model_status",
+    "notes",
+]
 ALLOWED_VERIFICATION_VALUES = {"verified", "needs_manual_check", "rejected"}
 
 REQUIRED_COLUMNS = {
@@ -455,6 +471,21 @@ class ReferenceTableTests(unittest.TestCase):
                     f"{row_number} verified mutation row is missing: {', '.join(missing)}",
                 )
 
+    def test_model_registry_has_required_columns(self):
+        path = ROOT / "structures" / "model_registry.tsv"
+        self.assertTrue(path.exists(), f"Missing model registry table: {path}")
+        with path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle, delimiter="\t")
+            self.assertEqual(reader.fieldnames, MODEL_REGISTRY_COLUMNS)
+
+    def test_colabfold_registry_scripts_exist(self):
+        for script_name in [
+            "inspect_colabfold_outputs.py",
+            "validate_model_registry.py",
+        ]:
+            path = SCRIPTS / script_name
+            self.assertTrue(path.exists(), f"Missing ColabFold registry script: {path}")
 
 if __name__ == "__main__":
     unittest.main()
+
