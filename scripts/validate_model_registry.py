@@ -24,6 +24,7 @@ REQUIRED_COLUMNS = [
     "pae_file_present",
     "model_status",
     "notes",
+    "dashboard_pdb_path",
 ]
 ALLOWED_SEQUENCE_TYPES = {"wildtype", "mutant"}
 ALLOWED_MODEL_STATUSES = {"completed", "failed", "needs_manual_check", "not_started"}

@@ -36,6 +36,7 @@ FIELDNAMES = [
     "pae_file_present",
     "model_status",
     "notes",
+    "dashboard_pdb_path",
 ]
 
 QUALITY_SUMMARY_FIELDNAMES = [

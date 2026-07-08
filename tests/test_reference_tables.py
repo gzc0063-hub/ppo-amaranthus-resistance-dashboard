@@ -41,6 +41,7 @@ MODEL_REGISTRY_COLUMNS = [
     "pae_file_present",
     "model_status",
     "notes",
+    "dashboard_pdb_path",
 ]
 ALLOWED_VERIFICATION_VALUES = {"verified", "needs_manual_check", "rejected"}
 
