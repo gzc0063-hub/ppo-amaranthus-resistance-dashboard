@@ -66,12 +66,18 @@ def validate() -> tuple[list[dict[str, str]], list[str]]:
         if pae_value not in ALLOWED_PAE_VALUES:
             errors.append(f"line {line_number}: invalid pae_file_present {pae_value}")
 
-        zip_path = Path(row.get("external_output_zip_path", ""))
-        if not zip_path.exists():
-            errors.append(f"line {line_number}: external ZIP path does not exist: {zip_path}")
+        zip_value = row.get("external_output_zip_path", "").strip()
+        zip_path = Path(zip_value) if zip_value else None
+        if status == "completed" and (zip_path is None or not zip_path.exists()):
+            errors.append(
+                f"line {line_number}: completed row external ZIP path does not exist: "
+                f"{zip_value}"
+            )
 
         if status == "completed" and not row.get("best_model_file_name", "").strip():
             errors.append(f"line {line_number}: completed row missing best_model_file_name")
+        if status == "completed" and not row.get("mean_plddt", "").strip():
+            errors.append(f"line {line_number}: completed row missing mean_plddt")
 
     return rows, errors
 
