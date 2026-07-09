@@ -1114,13 +1114,13 @@ def add_corner_axis_overlay(viewer_html: str, auto_rotate: bool = False) -> str:
   const container = document.getElementById("{container_id}");
   if (!container) return;
   const canvas = document.createElement("canvas");
-  canvas.width = 132;
-  canvas.height = 132;
+  canvas.width = 150;
+  canvas.height = 150;
   canvas.style.position = "absolute";
   canvas.style.left = "18px";
   canvas.style.bottom = "18px";
-  canvas.style.width = "100px";
-  canvas.style.height = "100px";
+  canvas.style.width = "112px";
+  canvas.style.height = "112px";
   canvas.style.pointerEvents = "none";
   canvas.style.background = "transparent";
   canvas.style.border = "0";
@@ -1129,8 +1129,8 @@ def add_corner_axis_overlay(viewer_html: str, auto_rotate: bool = False) -> str:
   container.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
-  const center = {{ x: 50, y: 84 }};
-  const axisLength = 36;
+  const center = {{ x: 62, y: 95 }};
+  const axisLength = 42;
   const autoRotate = {auto_rotate_js};
   let lastSpin = 0;
   const axes = [
@@ -1166,6 +1166,9 @@ def add_corner_axis_overlay(viewer_html: str, auto_rotate: bool = False) -> str:
     const viewer = viewerInstance();
     if (viewer && typeof viewer.getView === "function") {{
       const view = viewer.getView();
+      if (view && view.length >= 8) {{
+        return normalizeQuaternion({{ x: view[4] || 0, y: view[5] || 0, z: view[6] || 0, w: view[7] || 1 }});
+      }}
       if (view && view.length >= 7) {{
         return normalizeQuaternion({{ x: view[3] || 0, y: view[4] || 0, z: view[5] || 0, w: view[6] || 1 }});
       }}
@@ -1180,25 +1183,30 @@ def add_corner_axis_overlay(viewer_html: str, auto_rotate: bool = False) -> str:
       rotated,
       end: {{
         x: center.x + rotated[0] * axisLength,
-        y: center.y - rotated[1] * axisLength
+        y: center.y - rotated[1] * axisLength - rotated[2] * 10
+      }},
+      start: {{
+        x: center.x - rotated[0] * axisLength * 0.45,
+        y: center.y + rotated[1] * axisLength * 0.45 + rotated[2] * 4
       }}
     }};
   }}
 
   function drawArrow(axis) {{
     const rotated = axis.rotated;
-    const depth = Math.max(0.36, Math.min(1, (rotated[2] + 1.35) / 2.35));
+    const depth = Math.max(0.28, Math.min(1, (rotated[2] + 1.45) / 2.45));
+    const start = axis.start;
     const end = axis.end;
     ctx.strokeStyle = axis.color;
     ctx.fillStyle = axis.color;
     ctx.globalAlpha = depth;
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 5.4;
     ctx.lineCap = "round";
     ctx.shadowColor = "rgba(255,255,255,0.92)";
     ctx.shadowBlur = 4;
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
-    ctx.moveTo(center.x, center.y);
+    ctx.moveTo(start.x, start.y);
     ctx.lineTo(end.x, end.y);
     ctx.stroke();
     ctx.shadowColor = "transparent";
@@ -1240,14 +1248,22 @@ def add_corner_axis_overlay(viewer_html: str, auto_rotate: bool = False) -> str:
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const q = currentQuaternion();
+    ctx.save();
+    ctx.strokeStyle = "rgba(255,255,255,0.82)";
+    ctx.lineWidth = 8;
+    ctx.lineCap = "round";
     axes
       .map(axis => projectedAxis(axis, q))
       .sort((a, b) => a.rotated[2] - b.rotated[2])
       .forEach(axis => drawArrow(axis));
+    ctx.restore();
     ctx.fillStyle = "#17231d";
+    ctx.shadowColor = "rgba(255,255,255,0.95)";
+    ctx.shadowBlur = 4;
     ctx.beginPath();
     ctx.arc(center.x, center.y, 5, 0, Math.PI * 2);
     ctx.fill();
+    ctx.shadowColor = "transparent";
     window.requestAnimationFrame(draw);
   }}
   draw();
