@@ -153,28 +153,49 @@ def inject_css() -> None:
             border-bottom: 1px solid rgba(23, 35, 29, 0.14);
         }
 
+        [role="tablist"],
+        [role="tablist"] * {
+            opacity: 1 !important;
+            text-shadow: none !important;
+        }
+
+        [role="tablist"] [role="tab"],
+        [role="tablist"] [role="tab"] *,
+        [role="tablist"] button,
+        [role="tablist"] button *,
         button[role="tab"],
         button[role="tab"] *,
         [data-baseweb="tab"],
         [data-baseweb="tab"] * {
             color: #17231d !important;
+            -webkit-text-fill-color: #17231d !important;
             opacity: 1 !important;
             font-weight: 650 !important;
             text-shadow: none !important;
         }
 
+        [role="tablist"] [role="tab"]:hover,
+        [role="tablist"] [role="tab"]:hover *,
+        [role="tablist"] button:hover,
+        [role="tablist"] button:hover *,
         button[role="tab"]:hover,
         button[role="tab"]:hover *,
         [data-baseweb="tab"]:hover,
         [data-baseweb="tab"]:hover * {
             color: var(--green-dark) !important;
+            -webkit-text-fill-color: var(--green-dark) !important;
         }
 
+        [role="tablist"] [role="tab"][aria-selected="true"],
+        [role="tablist"] [role="tab"][aria-selected="true"] *,
+        [role="tablist"] button[aria-selected="true"],
+        [role="tablist"] button[aria-selected="true"] *,
         button[role="tab"][aria-selected="true"],
         button[role="tab"][aria-selected="true"] *,
         [data-baseweb="tab"][aria-selected="true"],
         [data-baseweb="tab"][aria-selected="true"] * {
             color: #ff4b4b !important;
+            -webkit-text-fill-color: #ff4b4b !important;
         }
 
         [data-testid="stSidebar"] {
@@ -220,8 +241,19 @@ def inject_css() -> None:
         div[data-testid="stMetricDelta"],
         div[data-testid="stMetricDelta"] * {
             color: #17231d !important;
+            -webkit-text-fill-color: #17231d !important;
             opacity: 1 !important;
             text-shadow: none !important;
+        }
+
+        div[data-testid="stMetric"] [data-testid],
+        div[data-testid="stMetric"] [data-testid] *,
+        div[data-testid="stMetric"] div,
+        div[data-testid="stMetric"] span,
+        div[data-testid="stMetric"] p {
+            color: #17231d !important;
+            -webkit-text-fill-color: #17231d !important;
+            opacity: 1 !important;
         }
 
         .hero {
