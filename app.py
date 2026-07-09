@@ -10,6 +10,12 @@ import py3Dmol
 import streamlit as st
 import streamlit.components.v1 as components
 
+from src.ppo_dashboard.structure_compare import (
+    align_pdbs_and_calculate_rmsd,
+    parse_mutation_focus,
+    residue_window,
+)
+
 
 ROOT = Path(__file__).resolve().parent
 
@@ -1368,6 +1374,220 @@ def render_structure_viewer(
     return True
 
 
+def model_label(row: pd.Series) -> str:
+    return f"{row['model_id']} - {row['species']} - {row['mutation']}"
+
+
+def pdb_path_for_model(model: pd.Series) -> Path:
+    dashboard_path = str(model.get("dashboard_pdb_path", "")).strip()
+    return ROOT / dashboard_path if dashboard_path else ROOT / "__missing_dashboard_pdb__"
+
+
+def read_dashboard_pdb(model: pd.Series) -> tuple[str | None, str | None]:
+    pdb_path = pdb_path_for_model(model)
+    if not pdb_path.exists() or pdb_path.stat().st_size == 0:
+        return None, (
+            "Interactive 3D comparison requires local dashboard PDB files. "
+            "The deployed version may show model metadata and ColabFold summary figures only."
+        )
+    return pdb_path.read_text(encoding="utf-8", errors="replace"), None
+
+
+def default_model_index(labels: list[str], preferred_model_id: str, fallback: int = 0) -> int:
+    for index, label in enumerate(labels):
+        if label.startswith(f"{preferred_model_id} -"):
+            return index
+    return min(fallback, max(len(labels) - 1, 0))
+
+
+def format_rmsd(value: float | None) -> str:
+    if value is None:
+        return "not available"
+    return f"{value:.3f} A"
+
+
+def render_overlay_legend() -> None:
+    st.markdown(
+        """
+        <div class="plddt-legend">
+            <div class="plddt-scale">
+                <span class="plddt-title">Overlay:</span>
+                <span class="plddt-item">
+                    <span class="plddt-swatch" style="background:#3b6f87;"></span>
+                    <span>Reference model = baseline</span>
+                </span>
+                <span class="plddt-item">
+                    <span class="plddt-swatch" style="background:#d8612d;"></span>
+                    <span>Comparison model = mutant/selected comparison</span>
+                </span>
+            </div>
+            <div class="muted">
+                The comparison model is superimposed on the reference using matched
+                C-alpha atoms. This is a structural-viewing aid, not docking or
+                herbicide-binding evidence.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def add_residue_focus_style(
+    viewer: py3Dmol.view,
+    model_index: int,
+    residues: list[int],
+    color: str,
+) -> None:
+    for residue in residues:
+        if residue <= 0:
+            continue
+        selection = {"model": model_index, "resi": residue}
+        viewer.addStyle(
+            selection,
+            {
+                "stick": {"color": color, "radius": 0.26},
+                "sphere": {"color": color, "radius": 0.46},
+            },
+        )
+
+
+def render_rmsd_summary(
+    reference_model: pd.Series,
+    comparison_model: pd.Series,
+    mutation: str,
+    global_rmsd: float | None,
+    local_rmsd: float | None,
+) -> None:
+    summary = pd.DataFrame(
+        [
+            {
+                "reference model": reference_model.get("model_id", ""),
+                "comparison model": comparison_model.get("model_id", ""),
+                "mutation": mutation,
+                "global C-alpha RMSD": format_rmsd(global_rmsd),
+                "local C-alpha RMSD": format_rmsd(local_rmsd),
+                "reference mean pLDDT": reference_model.get("mean_plddt", ""),
+                "comparison mean pLDDT": comparison_model.get("mean_plddt", ""),
+            }
+        ]
+    )
+    st.markdown("**Aligned overlay summary**")
+    st.dataframe(summary, use_container_width=True, hide_index=True)
+
+
+def render_overlay_model_figures(reference_model: pd.Series, comparison_model: pd.Series) -> None:
+    figure_columns = st.columns(2)
+    with figure_columns[0]:
+        st.caption(f"Reference figures: {reference_model.get('model_id', '')}")
+        render_model_figures(reference_model)
+    with figure_columns[1]:
+        st.caption(f"Comparison figures: {comparison_model.get('model_id', '')}")
+        render_model_figures(comparison_model)
+
+
+def render_aligned_overlay_viewer(
+    reference_model: pd.Series,
+    comparison_model: pd.Series,
+    controls: dict[str, str | bool],
+    zoom_to_site: bool,
+    height: int = 650,
+) -> bool:
+    reference_text, reference_error = read_dashboard_pdb(reference_model)
+    comparison_text, comparison_error = read_dashboard_pdb(comparison_model)
+    if reference_error or comparison_error or reference_text is None or comparison_text is None:
+        st.info(reference_error or comparison_error)
+        render_overlay_model_figures(reference_model, comparison_model)
+        return False
+
+    mutation = str(comparison_model.get("mutation", ""))
+    focus = parse_mutation_focus(mutation)
+    alignment = align_pdbs_and_calculate_rmsd(reference_text, comparison_text, mutation)
+    if alignment.transformed_pdb_text is None:
+        st.warning(
+            "Aligned overlay could not calculate a C-alpha superposition. "
+            f"Reason: {alignment.error or 'not available'}."
+        )
+        render_rmsd_summary(reference_model, comparison_model, mutation, None, None)
+        render_overlay_model_figures(reference_model, comparison_model)
+        return False
+
+    viewer = py3Dmol.view(width="100%", height=height)
+    viewer.addModel(reference_text, "pdb")
+    viewer.addModel(alignment.transformed_pdb_text, "pdb")
+    viewer.setStyle({"model": 0}, {"cartoon": {"color": "#3b6f87", "opacity": 0.88}})
+    viewer.setStyle({"model": 1}, {"cartoon": {"color": "#d8612d", "opacity": 0.72}})
+
+    backbone_atoms = ["N", "CA", "C", "O"]
+    sidechain_style = str(controls.get("sidechain_style", "Hide"))
+    if sidechain_style in {"Sticks", "Lines"}:
+        style_key = "stick" if sidechain_style == "Sticks" else "line"
+        for model_index, color in [(0, "#244f63"), (1, "#b84a42")]:
+            viewer.addStyle(
+                {"model": model_index, "not": {"atom": backbone_atoms}},
+                {style_key: {"color": color, "radius": 0.13}},
+            )
+
+    if focus.kind == "unknown":
+        st.warning(f"Mutation-site focus could not parse mutation name: {mutation}.")
+    elif focus.kind != "wt":
+        add_residue_focus_style(viewer, 0, focus.ref_residues, "#0b4b8b")
+        add_residue_focus_style(viewer, 1, focus.comp_residues, "#d83b2d")
+        label_selection = {"model": 0, "resi": focus.position, "atom": "CA"}
+        viewer.addLabel(
+            focus.label,
+            {
+                "fontColor": "#17231d",
+                "backgroundColor": "#ffffff",
+                "backgroundOpacity": 0.82,
+                "fontSize": 13,
+                "showBackground": True,
+            },
+            label_selection,
+        )
+        if focus.approximate:
+            st.caption(
+                "Deletion-site highlighting is approximate because the deleted residue "
+                "may not have a one-to-one residue match in the comparison model."
+            )
+
+    if zoom_to_site and focus.position is not None:
+        viewer.zoomTo({"resi": residue_window(focus.position, 8)})
+    elif zoom_to_site:
+        st.warning("Zoom to mutation site could not be applied because no residue position was parsed.")
+        viewer.zoomTo()
+    else:
+        viewer.zoomTo()
+
+    background = str(controls.get("background", "White"))
+    if background == "Dark":
+        viewer.setBackgroundColor("#111816")
+    elif background == "Light":
+        viewer.setBackgroundColor("#eef4ec")
+    else:
+        viewer.setBackgroundColor("#ffffff")
+
+    viewer_html = add_corner_axis_overlay(
+        viewer._make_html(),
+        auto_rotate=bool(controls.get("auto_rotate", False)),
+    )
+    components.html(viewer_html, height=height + 30, scrolling=False)
+    render_overlay_legend()
+    render_rmsd_summary(
+        reference_model,
+        comparison_model,
+        mutation,
+        alignment.global_rmsd,
+        alignment.local_rmsd,
+    )
+    st.info(
+        "Most PPO resistance mutations are single amino-acid changes, so the predicted "
+        "whole-protein fold may look very similar. This view highlights the mutation "
+        "site and local region. Docking and binding-pocket analysis are still needed "
+        "before interpreting herbicide binding or cross-resistance."
+    )
+    return True
+
+
 def model_figure_paths(model_id: str) -> dict[str, Path]:
     return {
         "coverage": DASHBOARD_FIGURES_DIR / f"{model_id}_coverage.png",
@@ -1468,20 +1688,26 @@ def protein_models_tab() -> None:
         return
 
     viewable = viewable.reset_index(drop=True)
-    labels = [
-        f"{row['model_id']} - {row['species']} - {row['mutation']}"
-        for _, row in viewable.iterrows()
-    ]
+    labels = [model_label(row) for _, row in viewable.iterrows()]
     viewer_mode = st.selectbox(
         "Viewer mode",
-        ["Single model", "Compare two models"],
+        [
+            "Single model viewer",
+            "Separate side-by-side viewer",
+            "Aligned overlay + mutation-site focus",
+        ],
         index=0,
     )
     viewer_controls = viewer_style_controls()
     render_3d_viewer_legend(viewer_controls)
 
-    if viewer_mode == "Compare two models":
+    if viewer_mode == "Separate side-by-side viewer":
         st.markdown("**Compare two predicted PPO2/PPX2 models**")
+        st.info(
+            "Side-by-side comparison is useful for general visual inspection, but "
+            "single-residue mutations may look very similar. Use overlay/mutation-site "
+            "focus to inspect local differences."
+        )
         st.caption(
             "Side-by-side comparison uses the same viewer settings for both structures. "
             "The models are not structurally aligned or superposed, and this is not a docking comparison."
@@ -1513,15 +1739,75 @@ def protein_models_tab() -> None:
         render_plddt_confidence_legend(viewer_controls)
         return
 
+    if viewer_mode == "Aligned overlay + mutation-site focus":
+        st.markdown("**Aligned overlay + mutation-site focus**")
+        st.caption(
+            "Select a baseline model and a mutant or comparison model. The comparison "
+            "structure is C-alpha aligned onto the reference for local visual inspection."
+        )
+        selector_columns = st.columns([1, 1, 0.8])
+        with selector_columns[0]:
+            reference_label = st.selectbox(
+                "Reference model",
+                labels,
+                index=default_model_index(labels, "APAL_WT"),
+                key="overlay_reference_model",
+            )
+            reference_model = viewable.iloc[labels.index(reference_label)]
+        with selector_columns[1]:
+            comparison_default = default_model_index(
+                labels,
+                "APAL_R128G",
+                fallback=1 if len(labels) > 1 else 0,
+            )
+            comparison_label = st.selectbox(
+                "Comparison model",
+                labels,
+                index=comparison_default,
+                key="overlay_comparison_model",
+            )
+            comparison_model = viewable.iloc[labels.index(comparison_label)]
+        with selector_columns[2]:
+            zoom_to_site = st.checkbox(
+                "Zoom to mutation site",
+                value=True,
+                key="overlay_zoom_to_site",
+            )
+
+        overlay_columns = st.columns(2)
+        with overlay_columns[0]:
+            st.markdown("**Reference metadata**")
+            render_model_metadata(reference_model)
+        with overlay_columns[1]:
+            st.markdown("**Comparison metadata**")
+            render_model_metadata(comparison_model)
+
+        if render_aligned_overlay_viewer(
+            reference_model,
+            comparison_model,
+            viewer_controls,
+            zoom_to_site,
+            height=650,
+        ):
+            render_plddt_confidence_legend(viewer_controls)
+            render_overlay_model_figures(reference_model, comparison_model)
+        return
+
     selected_label = st.selectbox("Choose a model for 3D viewing", labels)
     selected_model = viewable.iloc[labels.index(selected_label)]
 
     st.markdown("**Selected model metadata**")
     render_model_metadata(selected_model)
     st.caption(f"Best model file: {selected_model.get('best_model_file_name', '')}")
-    if render_structure_viewer(selected_model, viewer_controls, height=620):
+    viewer_rendered = render_structure_viewer(selected_model, viewer_controls, height=620)
+    if viewer_rendered:
         render_plddt_confidence_legend(viewer_controls)
-        render_model_figures(selected_model)
+    else:
+        st.info(
+            "Interactive 3D comparison requires local dashboard PDB files. "
+            "The deployed version may show model metadata and ColabFold summary figures only."
+        )
+    render_model_figures(selected_model)
 
     if not quality.empty:
         with st.expander("Model quality summary"):

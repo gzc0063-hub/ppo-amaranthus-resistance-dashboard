@@ -1,3 +1,4 @@
 streamlit
 pandas
 py3Dmol
+numpy

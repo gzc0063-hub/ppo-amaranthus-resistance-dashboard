@@ -33,6 +33,14 @@ Move to Mutation Evidence and demonstrate a filter by species or mutation. Expla
 
 Move to Protein Models and select a completed model. Show the metadata card, then rotate or zoom the 3D structure viewer. Explain that the structures are ColabFold predictions used for exploration, not proof of resistance or binding affinity.
 
+### How to demonstrate structural comparison
+
+First show the separate side-by-side viewer to compare two predicted PPO2/PPX2 models in a simple visual layout. Then switch to `Aligned overlay + mutation-site focus`.
+
+Use `APAL_WT` as the reference model and choose `APAL_R128G` or `APAL_DeltaG210` as the comparison model. Turn on `Zoom to mutation site` so the viewer focuses on the local residue window.
+
+Explain that most PPO resistance mutations are single amino-acid changes, so whole-protein fold differences are expected to be subtle and local. The overlay and RMSD values support structural exploration only; docking and binding-pocket analysis are still needed before interpreting herbicide binding or cross-resistance.
+
 Open Current Status to make the project boundary clear: evidence curation, mapping, model generation, and visualization are complete; ligand preparation and docking are planned next.
 
 End with Future Work / Next Phase. Use it as the transition from the current prototype to the planned docking and decision-support workflow.
