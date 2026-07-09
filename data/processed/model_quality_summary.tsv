@@ -8,6 +8,6 @@ Amaranthus palmeri	R128G	mutant	ATE88443.1	84.78	yes	completed	APAL_R128G_96ab9/
 Amaranthus palmeri	R128M	mutant	ATE88443.1	84.80	yes	completed	APAL_R128M_4a006/APAL_R128M_4a006_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb
 Amaranthus tuberculatus	Delta G210	mutant	ABD52326.1	84.37	yes	completed	ATUB_DeltaG210_77dd0/ATUB_DeltaG210_77dd0_unrelaxed_rank_001_alphafold2_ptm_model_5_seed_000.pdb
 Amaranthus tuberculatus	R128G	mutant	ABD52326.1	84.39	yes	completed	ATUB_R128G_77cf5/ATUB_R128G_77cf5_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb
-Amaranthus palmeri	G399A	mutant	ATE88443.1		no	needs_manual_check	
+Amaranthus palmeri	G399A	mutant	ATE88443.1	84.90	yes	completed	APAL_G399A_f8de5/APAL_G399A_f8de5_unrelaxed_rank_001_alphafold2_ptm_model_5_seed_000.pdb
 Amaranthus tuberculatus	R128I	mutant	ABD52326.1	84.53	yes	completed	ATUB_R128I_abb70/ATUB_R128I_abb70_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb
 Amaranthus retroflexus	R128G	mutant	QDQ68833.1	84.00	yes	completed	ARET_R128G_546f0/ARET_R128G_546f0_unrelaxed_rank_001_alphafold2_ptm_model_3_seed_000.pdb

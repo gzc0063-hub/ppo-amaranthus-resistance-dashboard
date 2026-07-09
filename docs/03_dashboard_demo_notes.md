@@ -18,7 +18,7 @@ streamlit run app.py
 
 - Polished hero section with clear prototype and in-progress status badges.
 - Sidebar quick-jump panel for Overview, Mutation Evidence, Protein Models, Current Status, and Future Work / Next Phase.
-- Presentation-ready metric cards for evidence rows, species, mutations, completed models, and manual-check models.
+- Presentation-ready metric cards for evidence rows, species, mutations, completed models, and models needing review.
 - Narrative overview cards explaining the objective, why Amaranthus resistance matters, and the biological question.
 - Mutation Evidence tab with filters, readable tables, and simple evidence-count charts.
 - Protein Models tab with improved model filtering, selected-model metadata cards, and interactive py3Dmol 3D viewing.
@@ -47,7 +47,7 @@ This dashboard is already functional as a research prototype. It integrates cura
 
 This version does not run docking, does not report docking scores, and does not interpret binding affinity or field resistance from predicted structures. It also does not change biological evidence calls or copy ColabFold ZIP files into the repository.
 
-`APAL_G399A` remains `needs_manual_check` because the corresponding completed model ZIP/PDB is not available for dashboard visualization.
+All 12 ColabFold registry models, including `APAL_G399A`, are completed and available for local dashboard 3D visualization.
 
 ## Suggested 5-minute presentation script
 

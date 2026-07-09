@@ -67,10 +67,6 @@ def validate_dashboard_models() -> tuple[list[str], list[str], list[str]]:
         status = row.get("model_status", "").strip()
         dashboard_path = row.get("dashboard_pdb_path", "").strip()
 
-        if model_id == "APAL_G399A" and status == "needs_manual_check" and not dashboard_path:
-            missing.append(model_id)
-            continue
-
         if status != "completed":
             continue
 
