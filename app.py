@@ -153,20 +153,27 @@ def inject_css() -> None:
             border-bottom: 1px solid rgba(23, 35, 29, 0.14);
         }
 
-        div[data-testid="stTabs"] button[role="tab"],
-        div[data-testid="stTabs"] button[role="tab"] p {
+        button[role="tab"],
+        button[role="tab"] *,
+        [data-baseweb="tab"],
+        [data-baseweb="tab"] * {
             color: #17231d !important;
             opacity: 1 !important;
             font-weight: 650 !important;
+            text-shadow: none !important;
         }
 
-        div[data-testid="stTabs"] button[role="tab"]:hover,
-        div[data-testid="stTabs"] button[role="tab"]:hover p {
+        button[role="tab"]:hover,
+        button[role="tab"]:hover *,
+        [data-baseweb="tab"]:hover,
+        [data-baseweb="tab"]:hover * {
             color: var(--green-dark) !important;
         }
 
-        div[data-testid="stTabs"] button[role="tab"][aria-selected="true"],
-        div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p {
+        button[role="tab"][aria-selected="true"],
+        button[role="tab"][aria-selected="true"] *,
+        [data-baseweb="tab"][aria-selected="true"],
+        [data-baseweb="tab"][aria-selected="true"] * {
             color: #ff4b4b !important;
         }
 
@@ -204,6 +211,17 @@ def inject_css() -> None:
         div[data-testid="stMetric"] label {
             color: var(--muted) !important;
             font-weight: 700;
+        }
+
+        div[data-testid="stMetricLabel"],
+        div[data-testid="stMetricLabel"] *,
+        div[data-testid="stMetricValue"],
+        div[data-testid="stMetricValue"] *,
+        div[data-testid="stMetricDelta"],
+        div[data-testid="stMetricDelta"] * {
+            color: #17231d !important;
+            opacity: 1 !important;
+            text-shadow: none !important;
         }
 
         .hero {
