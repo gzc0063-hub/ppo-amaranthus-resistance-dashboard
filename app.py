@@ -149,6 +149,27 @@ def inject_css() -> None:
             top: 0.65rem !important;
         }
 
+        div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+            border-bottom: 1px solid rgba(23, 35, 29, 0.14);
+        }
+
+        div[data-testid="stTabs"] button[role="tab"],
+        div[data-testid="stTabs"] button[role="tab"] p {
+            color: #17231d !important;
+            opacity: 1 !important;
+            font-weight: 650 !important;
+        }
+
+        div[data-testid="stTabs"] button[role="tab"]:hover,
+        div[data-testid="stTabs"] button[role="tab"]:hover p {
+            color: var(--green-dark) !important;
+        }
+
+        div[data-testid="stTabs"] button[role="tab"][aria-selected="true"],
+        div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p {
+            color: #ff4b4b !important;
+        }
+
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, #173523 0%, #244f35 100%);
         }
