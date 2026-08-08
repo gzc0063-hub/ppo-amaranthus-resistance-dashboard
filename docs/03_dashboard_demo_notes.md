@@ -14,6 +14,14 @@ Run the Streamlit app from the repository root:
 streamlit run app.py
 ```
 
+## Public dashboard link
+
+The public dashboard is intended to run from Streamlit Community Cloud:
+
+<https://ppo-amaranthus-resistance-dashboard.streamlit.app/>
+
+The GitHub repository remains the official source page. The public app can load the 12 small dashboard PDB files from the `dashboard-pdb-v1` GitHub Release when local `structures/dashboard_models/` files are not available.
+
 ## New UI/UX highlights
 
 - Polished hero section with clear prototype and in-progress status badges.

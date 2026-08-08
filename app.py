@@ -3,6 +3,9 @@ from __future__ import annotations
 from html import escape
 from pathlib import Path
 import re
+from urllib.error import URLError
+from urllib.parse import quote
+from urllib.request import urlopen
 
 import altair as alt
 import pandas as pd
@@ -28,6 +31,12 @@ MODEL_QUALITY_PATH = ROOT / "data" / "processed" / "model_quality_summary.tsv"
 REFERENCE_SEQUENCES_PATH = ROOT / "sequences" / "final_reference_sequences.tsv"
 MUTATION_MAPPING_PATH = ROOT / "sequences" / "mutation_reference_mapping.tsv"
 DASHBOARD_FIGURES_DIR = ROOT / "structures" / "dashboard_figures"
+GITHUB_REPOSITORY_URL = "https://github.com/gzc0063-hub/ppo-amaranthus-resistance-dashboard"
+STREAMLIT_APP_URL = "https://ppo-amaranthus-resistance-dashboard.streamlit.app/"
+DASHBOARD_PDB_RELEASE_TAG = "dashboard-pdb-v1"
+DASHBOARD_PDB_RELEASE_BASE_URL = (
+    f"{GITHUB_REPOSITORY_URL}/releases/download/{DASHBOARD_PDB_RELEASE_TAG}"
+)
 
 
 FUTURE_WORK_GROUPS = {
@@ -1356,12 +1365,11 @@ def render_structure_viewer(
     height: int = 620,
     viewer_width: int | str = "100%",
 ) -> bool:
-    pdb_path = ROOT / selected_model.get("dashboard_pdb_path", "")
-    if not pdb_path.exists() or pdb_path.stat().st_size == 0:
-        st.warning("No dashboard PDB file is available for the selected model.")
+    pdb_text, pdb_error = read_dashboard_pdb(selected_model)
+    if pdb_text is None:
+        st.warning(pdb_error or "No dashboard PDB file is available for the selected model.")
         return False
 
-    pdb_text = pdb_path.read_text(encoding="utf-8", errors="replace")
     viewer = py3Dmol.view(width=viewer_width, height=height)
     viewer.addModel(pdb_text, "pdb")
     add_viewer_styles(viewer, controls)
@@ -1383,13 +1391,41 @@ def pdb_path_for_model(model: pd.Series) -> Path:
     return ROOT / dashboard_path if dashboard_path else ROOT / "__missing_dashboard_pdb__"
 
 
+def dashboard_pdb_filename(model: pd.Series) -> str:
+    dashboard_path = str(model.get("dashboard_pdb_path", "")).strip()
+    return Path(dashboard_path).name if dashboard_path else ""
+
+
+def public_dashboard_pdb_url(model: pd.Series) -> str:
+    filename = dashboard_pdb_filename(model)
+    if not filename:
+        return ""
+    return f"{DASHBOARD_PDB_RELEASE_BASE_URL}/{quote(filename)}"
+
+
+@st.cache_data(show_spinner=False)
+def fetch_public_pdb_text(url: str) -> str:
+    with urlopen(url, timeout=20) as response:
+        return response.read().decode("utf-8", errors="replace")
+
+
 def read_dashboard_pdb(model: pd.Series) -> tuple[str | None, str | None]:
     pdb_path = pdb_path_for_model(model)
     if not pdb_path.exists() or pdb_path.stat().st_size == 0:
-        return None, (
-            "Interactive 3D comparison requires local dashboard PDB files. "
-            "The deployed version may show model metadata and ColabFold summary figures only."
-        )
+        public_url = public_dashboard_pdb_url(model)
+        if not public_url:
+            return None, "No dashboard PDB file or public PDB URL is available for this model."
+        try:
+            pdb_text = fetch_public_pdb_text(public_url)
+        except (OSError, URLError) as error:
+            return None, (
+                "Interactive 3D viewing requires local dashboard PDB files or the "
+                f"published GitHub Release PDB asset. Could not load {public_url}. "
+                f"Details: {error}"
+            )
+        if "ATOM" not in pdb_text:
+            return None, f"The public PDB asset did not look like a PDB file: {public_url}"
+        return pdb_text, None
     return pdb_path.read_text(encoding="utf-8", errors="replace"), None
 
 
@@ -1804,8 +1840,9 @@ def protein_models_tab() -> None:
         render_plddt_confidence_legend(viewer_controls)
     else:
         st.info(
-            "Interactive 3D comparison requires local dashboard PDB files. "
-            "The deployed version may show model metadata and ColabFold summary figures only."
+            "Interactive 3D viewing requires local dashboard PDB files or published "
+            "GitHub Release PDB assets. Model metadata and ColabFold summary figures "
+            "remain visible if a PDB asset cannot be loaded."
         )
     render_model_figures(selected_model)
 
